@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a simple soccer teams api, its provides information about teams.
+  version: "1.0.0"
+  title: Swagger SoccerApi
+  contact:
+    email: gonzalozoloaga44@gmail.com
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/gonza1020/soccer-api/1.0.0
+  - url: 'https://petstore.swagger.io/v2'
+tags:
+  - name: SoccerTeam
+    description: Everything about Football teams
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+
+paths:
+  /equipos:
+    get:
+      tags:
+        - SoccerTeam
+      summary: Get soccer teams
+      operationId: getAllSoccerTeams
+      responses:
+        '200':
+          description: Soccer teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SoccerTeam'
+    post:
+      tags:
+        - SoccerTeam
+      summary: Add a new Soccer Team to the service
+      operationId: addSoccerTeam
+      responses:
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '201':
+          description: Soccer team added succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SoccerTeam'
+       
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SoccerTeam"
+  /equipos/{id}:
+    get:
+      tags:
+        - SoccerTeam
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      summary: Get a Soccer Team.
+      operationId: getSoccerTeamById
+      responses:
+        '200':
+          description: Soccer team by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SoccerTeam'
+        '404':
+          description: Soccer team not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - SoccerTeam
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      summary: Delete a Soccer Team.
+      operationId: deleteSoccerTeam
+      responses:
+        '202':
+          description: No content
+        '404':
+          description: Soccer team not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - SoccerTeam
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      summary: Update a Soccer Team.
+      operationId: updateSoccerTeam
+      responses:
+        '200':
+          description: Soccer team updated succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SoccerTeam'
+        '404':
+          description: Soccer team not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SoccerTeam"
+  /equipos/buscar:
+    get:
+      tags:
+        - SoccerTeam
+      parameters:
+        - in: query
+          name: nombre   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The team name.
+      summary: Get a Soccer Team by name.
+      operationId: getSoccerTeamByName
+      responses:
+        '200':
+          description: Soccer team by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SoccerTeam'
+        '404':
+          description: Soccer team not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse' 
+
+components:
+  schemas:
+    SoccerTeam:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+          example: Real Madrid
+        liga:
+          type: string
+          example: La liga
+        pais:
+          type: string
+          example: España
+    ErrorResponse:
+      type: object
+      properties:
+        mensaje:
+          type: string
+        codigo: 
+          type: integer
