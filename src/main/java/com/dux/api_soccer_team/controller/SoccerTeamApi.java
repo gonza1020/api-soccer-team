@@ -6,7 +6,7 @@
 package com.dux.api_soccer_team.controller;
 
 import com.dux.api_soccer_team.dto.ErrorResponse;
-import com.dux.api_soccer_team.dto.SoccerTeam;
+import com.dux.api_soccer_team.dto.SoccerTeamResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -33,7 +33,7 @@ public interface SoccerTeamApi {
     /**
      * POST /equipos : Add a new Soccer Team to the service
      *
-     * @param soccerTeam  (required)
+     * @param soccerTeamResponse  (required)
      * @return Invalid request (status code 400)
      *         or Soccer team added succesfully (status code 201)
      */
@@ -46,7 +46,7 @@ public interface SoccerTeamApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "201", description = "Soccer team added succesfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeam.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeamResponse.class))
             })
         }
     )
@@ -56,8 +56,8 @@ public interface SoccerTeamApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    ResponseEntity<SoccerTeam> addSoccerTeam(
-        @Parameter(name = "SoccerTeam", description = "", required = true) @Valid @RequestBody SoccerTeam soccerTeam
+    ResponseEntity<SoccerTeamResponse> addSoccerTeam(
+        @Parameter(name = "SoccerTeam", description = "", required = true) @Valid @RequestBody SoccerTeamResponse soccerTeamResponse
     );
 
 
@@ -73,7 +73,7 @@ public interface SoccerTeamApi {
         summary = "Delete a Soccer Team.",
         tags = { "SoccerTeam" },
         responses = {
-            @ApiResponse(responseCode = "202", description = "No content"),
+            @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Soccer team not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
@@ -100,7 +100,7 @@ public interface SoccerTeamApi {
         tags = { "SoccerTeam" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Soccer teams", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SoccerTeam.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SoccerTeamResponse.class)))
             })
         }
     )
@@ -109,7 +109,7 @@ public interface SoccerTeamApi {
         value = "/equipos",
         produces = { "application/json" }
     )
-    ResponseEntity<List<SoccerTeam>> getAllSoccerTeams(
+    ResponseEntity<List<SoccerTeamResponse>> getAllSoccerTeams(
         
     );
 
@@ -127,7 +127,7 @@ public interface SoccerTeamApi {
         tags = { "SoccerTeam" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Soccer team by id", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeam.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeamResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Soccer team not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
@@ -139,7 +139,7 @@ public interface SoccerTeamApi {
         value = "/equipos/{id}",
         produces = { "application/json" }
     )
-    ResponseEntity<SoccerTeam> getSoccerTeamById(
+    ResponseEntity<SoccerTeamResponse> getSoccerTeamById(
         @Min(1) @Parameter(name = "id", description = "The user ID", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) throws BadRequestException;
 
@@ -157,7 +157,7 @@ public interface SoccerTeamApi {
         tags = { "SoccerTeam" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Soccer team by id", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeam.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeamResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Soccer team not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
@@ -169,7 +169,7 @@ public interface SoccerTeamApi {
         value = "/equipos/buscar",
         produces = { "application/json" }
     )
-    ResponseEntity<SoccerTeam> getSoccerTeamByName(
+    ResponseEntity<SoccerTeamResponse> getSoccerTeamByName(
         @NotNull @Parameter(name = "nombre", description = "The team name.", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "nombre", required = true) String nombre
     );
 
@@ -178,7 +178,7 @@ public interface SoccerTeamApi {
      * PUT /equipos/{id} : Update a Soccer Team.
      *
      * @param id The user ID (required)
-     * @param soccerTeam  (required)
+     * @param soccerTeamResponse  (required)
      * @return Soccer team updated succesfully (status code 200)
      *         or Soccer team not found (status code 404)
      */
@@ -188,7 +188,7 @@ public interface SoccerTeamApi {
         tags = { "SoccerTeam" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Soccer team updated succesfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeam.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SoccerTeamResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Soccer team not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
@@ -201,9 +201,9 @@ public interface SoccerTeamApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    ResponseEntity<SoccerTeam> updateSoccerTeam(
+    ResponseEntity<SoccerTeamResponse> updateSoccerTeam(
         @Min(1) @Parameter(name = "id", description = "The user ID", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
-        @Parameter(name = "SoccerTeam", description = "", required = true) @Valid @RequestBody SoccerTeam soccerTeam
+        @Parameter(name = "SoccerTeam", description = "", required = true) @Valid @RequestBody SoccerTeamResponse soccerTeamResponse
     );
 
 }
