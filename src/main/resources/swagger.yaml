@@ -101,7 +101,7 @@ paths:
       summary: Delete a Soccer Team.
       operationId: deleteSoccerTeam
       responses:
-        '202':
+        '204':
           description: No content
         '404':
           description: Soccer team not found
