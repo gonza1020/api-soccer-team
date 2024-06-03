@@ -19,7 +19,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SoccerTeam {
+public class SoccerTeamResponse {
 
 
   private Integer id;
@@ -33,7 +33,7 @@ public class SoccerTeam {
   @NotBlank(message = "El nombre del pais no puede estar vacio")
   private String pais;
 
-  public SoccerTeam id(Integer id) {
+  public SoccerTeamResponse id(Integer id) {
     this.id = id;
     return this;
   }
@@ -53,7 +53,7 @@ public class SoccerTeam {
     this.id = id;
   }
 
-  public SoccerTeam nombre(String nombre) {
+  public SoccerTeamResponse nombre(String nombre) {
     this.nombre = nombre;
     return this;
   }
@@ -73,7 +73,7 @@ public class SoccerTeam {
     this.nombre = nombre;
   }
 
-  public SoccerTeam liga(String liga) {
+  public SoccerTeamResponse liga(String liga) {
     this.liga = liga;
     return this;
   }
@@ -93,7 +93,7 @@ public class SoccerTeam {
     this.liga = liga;
   }
 
-  public SoccerTeam pais(String pais) {
+  public SoccerTeamResponse pais(String pais) {
     this.pais = pais;
     return this;
   }
@@ -121,11 +121,11 @@ public class SoccerTeam {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SoccerTeam soccerTeam = (SoccerTeam) o;
-    return Objects.equals(this.id, soccerTeam.id) &&
-        Objects.equals(this.nombre, soccerTeam.nombre) &&
-        Objects.equals(this.liga, soccerTeam.liga) &&
-        Objects.equals(this.pais, soccerTeam.pais);
+    SoccerTeamResponse soccerTeamResponse = (SoccerTeamResponse) o;
+    return Objects.equals(this.id, soccerTeamResponse.id) &&
+        Objects.equals(this.nombre, soccerTeamResponse.nombre) &&
+        Objects.equals(this.liga, soccerTeamResponse.liga) &&
+        Objects.equals(this.pais, soccerTeamResponse.pais);
   }
 
   @Override
