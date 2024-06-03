@@ -37,7 +37,7 @@ public class AuthController {
             String token = jwtTokenProvider.createToken(userDetails);
             return ResponseEntity.ok(new JwtAuthenticationResponse(token));
         } catch (UsernameNotFoundException | BadCredentialsException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(401).build();
         }
     }
 }
