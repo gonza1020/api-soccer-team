@@ -1,14 +1,11 @@
 package com.dux.api_soccer_team.service;
 
-import com.dux.api_soccer_team.dto.SoccerTeam;
+import com.dux.api_soccer_team.dto.SoccerTeamResponse;
 import com.dux.api_soccer_team.model.SoccerTeamModel;
 import com.dux.api_soccer_team.repository.SoccerTeamRepository;
-import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -28,46 +25,48 @@ public class SoccerTeamServiceImpl implements SoccerTeamService{
 
 
     @Override
-    public SoccerTeam getSoccerTeamById(Integer id) {
+    public SoccerTeamResponse getSoccerTeamById(Integer id) {
         SoccerTeamModel soccerTeam = repository.findById(id).orElseThrow();
-        return modelMapper.map(soccerTeam, SoccerTeam.class);
+        return modelMapper.map(soccerTeam, SoccerTeamResponse.class);
     }
 
     @Override
-    public SoccerTeam getSoccerTeamByNombre(String name) {
+    public SoccerTeamResponse getSoccerTeamByNombre(String name) {
         SoccerTeamModel soccerTeam = repository.findByNombre(name);
         if(soccerTeam != null) {
-            return modelMapper.map(soccerTeam, SoccerTeam.class);
+            return modelMapper.map(soccerTeam, SoccerTeamResponse.class);
         }
         throw new NoSuchElementException();
     }
 
     @Override
-    public SoccerTeam updateSoccerTeam(Integer id, SoccerTeam soccerTeam) {
+    public SoccerTeamResponse updateSoccerTeam(Integer id, SoccerTeamResponse soccerTeamResponse) {
 
-        SoccerTeam soccerTeamToUpdate = getSoccerTeamById(id);
-        soccerTeamToUpdate
+        SoccerTeamResponse soccerTeamResponseToUpdate = getSoccerTeamById(id);
+        soccerTeamResponseToUpdate
                 .id(id)
-                .liga(soccerTeam.getLiga())
-                .pais(soccerTeam.getPais())
-                .nombre(soccerTeam.getNombre());
-        return addSoccerTeam(soccerTeamToUpdate);
+                .liga(soccerTeamResponse.getLiga())
+                .pais(soccerTeamResponse.getPais())
+                .nombre(soccerTeamResponse.getNombre());
+        return addSoccerTeam(soccerTeamResponseToUpdate);
     }
 
     @Override
-    public SoccerTeam addSoccerTeam(SoccerTeam soccerTeam) {
-        SoccerTeamModel model = modelMapper.map(soccerTeam, SoccerTeamModel.class);
+    public SoccerTeamResponse addSoccerTeam(SoccerTeamResponse soccerTeamResponse) {
+        SoccerTeamModel model = modelMapper.map(soccerTeamResponse, SoccerTeamModel.class);
         SoccerTeamModel savedModel = repository.save(model);
-        return modelMapper.map(savedModel, SoccerTeam.class);
+        return modelMapper.map(savedModel, SoccerTeamResponse.class);
     }
 
     @Override
-    public List<SoccerTeam> getAllSoccerTeams() {
-        return repository.findAll().stream().map(equipo -> modelMapper.map(equipo, SoccerTeam.class)).collect(Collectors.toList());
+    public List<SoccerTeamResponse> getAllSoccerTeams() {
+        return repository.findAll().stream().map(equipo -> modelMapper.map(equipo, SoccerTeamResponse.class)).collect(Collectors.toList());
     }
 
     @Override
     public void deleteSoccerTeam(Integer id) {
-
+        SoccerTeamResponse soccerTeamResponse = getSoccerTeamById(id);
+        SoccerTeamModel soccerTeamModel = modelMapper.map(soccerTeamResponse, SoccerTeamModel.class);
+        repository.delete(soccerTeamModel);
     }
 }

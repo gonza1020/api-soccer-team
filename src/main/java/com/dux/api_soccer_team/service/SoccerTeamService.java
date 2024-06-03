@@ -1,17 +1,16 @@
 package com.dux.api_soccer_team.service;
 
-import com.dux.api_soccer_team.dto.SoccerTeam;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.dux.api_soccer_team.dto.SoccerTeamResponse;
 import org.apache.coyote.BadRequestException;
 
 import java.util.List;
 
 public interface SoccerTeamService {
 
-    SoccerTeam getSoccerTeamById(Integer id) throws BadRequestException;
-    SoccerTeam getSoccerTeamByNombre(String name);
-    SoccerTeam updateSoccerTeam(Integer id, SoccerTeam soccerTeam);
-    SoccerTeam addSoccerTeam(SoccerTeam soccerTeam);
-    List<SoccerTeam> getAllSoccerTeams();
+    SoccerTeamResponse getSoccerTeamById(Integer id) throws BadRequestException;
+    SoccerTeamResponse getSoccerTeamByNombre(String name);
+    SoccerTeamResponse updateSoccerTeam(Integer id, SoccerTeamResponse soccerTeamResponse);
+    SoccerTeamResponse addSoccerTeam(SoccerTeamResponse soccerTeamResponse);
+    List<SoccerTeamResponse> getAllSoccerTeams();
     void deleteSoccerTeam(Integer id);
 }
